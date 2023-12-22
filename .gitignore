@@ -1,0 +1,13 @@
+# Byte-compiled / optimized files:
+*.py[cod]
+__pycache__/
+
+# Environment / workspace settings:
+.env
+.idea/
+.venv/
+.vscode/
+
+# Django specific / miscellaneous:
+*.sqlite3
+*.sqlite3-journal
