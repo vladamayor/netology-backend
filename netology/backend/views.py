@@ -68,7 +68,6 @@ class RegisterAccount(APIView):
             "position",
         }.issubset(request.data):
             # проверяем пароль на сложность
-            sad = "asd"
             try:
                 validate_password(request.data["password"])
             except Exception as password_error:
@@ -470,9 +469,8 @@ class BasketView(APIView):
                 )
                 objects_updated = 0
                 for order_item in items_dict:
-                    if (
-                        type(order_item["id"]) == int
-                        and type(order_item["quantity"]) == int
+                    if isinstance(order_item["id"], int) and isinstance(
+                        order_item["quantity"], int
                     ):
                         objects_updated += OrderItem.objects.filter(
                             order_id=basket.id, id=order_item["id"]

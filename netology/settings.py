@@ -1,4 +1,9 @@
 import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -73,20 +78,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -111,11 +103,11 @@ AUTH_USER_MODEL = "netology.User"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_USE_TLS = True
 
-EMAIL_HOST = "smtp.mail.ru"
+EMAIL_HOST = "smtp.yandex.ru"
 
-EMAIL_HOST_USER = "netology.diplom@mail.ru"
-EMAIL_HOST_PASSWORD = "RANGVKPEZ61jsCgTbsbG"
-EMAIL_PORT = "465"
+EMAIL_HOST_USER = "vladamayor@yandex.ru"
+EMAIL_HOST_PASSWORD = os.environ["PASS"]
+EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 
@@ -132,3 +124,32 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Celery Settings:
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#accept-content
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#result-accept-content
+CELERY_ACCEPT_CONTENT = ["json", "pickle"]
+CELERY_RESULT_ACCEPT_CONTENT = CELERY_ACCEPT_CONTENT.copy()
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#task-compression
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#result-compression
+CELERY_TASK_COMPRESSION = "lzma"
+CELERY_RESULT_COMPRESSION = CELERY_TASK_COMPRESSION
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#task-serializer
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#result-serializer
+CELERY_TASK_SERIALIZER = "pickle"
+CELERY_RESULT_SERIALIZER = CELERY_TASK_SERIALIZER
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#task-ignore-result
+CELERY_TASK_IGNORE_RESULT = True
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#task-soft-time-limit
+CELERY_TASK_SOFT_TIME_LIMIT = timedelta(minutes=5).total_seconds()
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#result-backend
+CELERY_RESULT_BACKEND = "rpc://"
+
+# https://docs.celeryproject.org/en/stable/userguide/configuration.html#broker-url
+CELERY_BROKER_URL = "amqp://guest:guest@127.0.0.1:9000"

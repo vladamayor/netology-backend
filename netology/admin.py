@@ -23,7 +23,15 @@ class CustomUserAdmin(UserAdmin):
     """
 
     model = User
-
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("email", "password1", "password2"),
+            },
+        ),
+    )
     fieldsets = (
         (None, {"fields": ("email", "password", "type")}),
         (
