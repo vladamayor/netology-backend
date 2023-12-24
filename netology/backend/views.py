@@ -184,7 +184,6 @@ class AccountDetails(APIView):
         # проверяем обязательные аргументы
 
         if "password" in request.data:
-            errors = {}
             # проверяем пароль на сложность
             try:
                 validate_password(request.data["password"])

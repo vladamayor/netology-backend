@@ -49,12 +49,19 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["name", "url", "user", "state"]
+    list_filter = ["state"]
+    search_fields = ["name", "user__first_name", "user__last_name"]
+
+
+class ShopInline(admin.TabularInline):
+    model = Shop.categories.through
+    verbose_name = verbose_name_plural = "Магазины"
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    inlines = [ShopInline]
 
 
 @admin.register(Product)
