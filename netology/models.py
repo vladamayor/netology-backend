@@ -98,7 +98,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return (
-            f"{self.first_name} {self.last_name}" if (self.first_name and self.last_name) else "-"
+            f"{self.first_name} {self.last_name}"
+            if (self.first_name and self.last_name)
+            else "-"
         )
 
     class Meta:
@@ -197,6 +199,9 @@ class ProductInfo(models.Model):
                 fields=["product", "shop", "external_id"], name="unique_product_info"
             ),
         ]
+
+    def __str__(self):
+        return f"{self.model}, {self.product}, {self.shop}"
 
 
 class Parameter(models.Model):

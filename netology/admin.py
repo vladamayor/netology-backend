@@ -51,7 +51,11 @@ class CustomUserAdmin(UserAdmin):
 class ShopAdmin(admin.ModelAdmin):
     list_display = ["name", "url", "user", "state"]
     list_filter = ["state"]
-    search_fields = ["name", "user__first_name", "user__last_name"]
+    search_fields = [
+        "name",
+        "user__first_name",
+        "user__last_name",
+    ]
 
 
 class ShopInline(admin.TabularInline):
@@ -62,26 +66,32 @@ class ShopInline(admin.TabularInline):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     inlines = [ShopInline]
+    list_display = ["name"]
+    fieldsets = ((None, {"fields": ["name"]}),)
+    search_fields = ["name"]
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["name", "category"]
+    search_fields = ["name"]
 
 
 @admin.register(ProductInfo)
 class ProductInfoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["product", "model", "shop", "quantity", "price", "price_rrc"]
+    search_fields = ["product__name"]
 
 
 @admin.register(Parameter)
 class ParameterAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["name"]
 
 
 @admin.register(ProductParameter)
 class ProductParameterAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["product_info", "parameter", "value"]
+    search_fields = ["product_info__model", "value"]
 
 
 @admin.register(Order)
