@@ -1,0 +1,16 @@
+---
+services:
+  rabbitmq:
+    image: "rabbitmq:latest"
+    ports:
+      - "5672:5672"
+    expose:
+      - "5672"
+  app:
+    image: "dj-diplom:1.0"
+    depends_on:
+      - "rabbitmq"
+    links:
+      - "rabbitmq"
+    ports:
+      - "8000:8000"

@@ -104,17 +104,32 @@ class ProductParameterAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["create_time_display", "state", "user", "contact"]
+    search_fields = ["user"]
+    list_filter = ["state"]
+
+    def create_time_display(self, obj):
+        return obj.dt.strftime("%d-%m-%Y %H:%M:%S")
 
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "order",
+        "product_info",
+        "quantity",
+    ]
+    search_fields = ["order__dt"]
 
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["user", "city", "phone"]
+    list_filter = ["city"]
+    search_fields = [
+        "user__first_name",
+        "user__last_name",
+    ]
 
 
 @admin.register(ConfirmEmailToken)

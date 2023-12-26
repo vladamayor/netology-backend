@@ -294,7 +294,7 @@ class Order(models.Model):
         ordering = ("-dt",)
 
     def __str__(self):
-        return str(self.dt)
+        return str(self.dt.strftime("%d-%m-%Y %H:%M:%S"))
 
     # @property
     # def sum(self):
